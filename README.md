@@ -6,7 +6,7 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2609.39564-b31b1b.svg?style=for-the-badge)](https://arxiv.org/abs/2609.39564)
 [![Project Page](https://img.shields.io/badge/Project_Page-1A73E8?style=for-the-badge)](https://a2z-gamespec-bench.github.io)
-[![Code](https://img.shields.io/badge/Code_%26_Data-coming_soon-6b7280.svg?style=for-the-badge)](#news)
+[![Dataset](https://img.shields.io/badge/%F0%9F%A4%97_Dataset-A2Z--GameSpec--Bench-FFD21E.svg?style=for-the-badge)](https://huggingface.co/datasets/KRAFTON/A2Z-GameSpec-Bench)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 [Seonho Lee](https://glanceyes.github.io)<sup>1\*</sup>, [Wonryeol Jeong](https://github.com/jwr0218)<sup>1\*</sup>, [Alberto Cereser](https://github.com/albusdemens)<sup>1</sup>, [Inha Kang](https://2na-97.github.io/)<sup>1,2</sup>, [Hyeonjong Kim](https://github.com/hjkim001)<sup>1</sup>, [Seungmin Kwak](https://github.com/Kwak-Seungmin)<sup>1,3</sup>, [Dongmin Park](https://dongmean.github.io)<sup>1</sup>
@@ -44,7 +44,7 @@ Delegating complete application development to coding agents requires preserving
 
 ## News
 
-- Code and dataset will be available soon.
+- The dataset is available on [Hugging Face](https://huggingface.co/datasets/KRAFTON/A2Z-GameSpec-Bench). Code will be available soon.
 - Our [paper preprint](https://arxiv.org/abs/2609.39564) is available on arXiv.
 
 
@@ -117,6 +117,38 @@ Each GDD is developed from a short brief and a creative vision, then checked for
 </table>
 <sub>Games built by the evaluated agents from the <i>Big</i> and <i>Small</i> GDDs.</sub>
 </div>
+
+
+## Dataset
+
+The 100 GDDs, their Dependency-Aware Contracts, and canonical scenarios are available on Hugging Face: [KRAFTON/A2Z-GameSpec-Bench](https://huggingface.co/datasets/KRAFTON/A2Z-GameSpec-Bench).
+
+Load the tasks with the `datasets` library:
+
+```python
+import json
+from datasets import load_dataset
+
+# All 100 tasks
+dataset = load_dataset("KRAFTON/A2Z-GameSpec-Bench", split="test")
+
+# Small or Big tasks only
+small = load_dataset("KRAFTON/A2Z-GameSpec-Bench", "small", split="test")
+big = load_dataset("KRAFTON/A2Z-GameSpec-Bench", "big", split="test")
+
+game = dataset[0]
+gdd = game["gdd"]                             # GDD Markdown
+contract = json.loads(game["contract_json"])  # rules, invariants, scenarios, and supporting files
+```
+
+Or download the GDD Markdown and contract JSON files directly:
+
+```bash
+pip install -U huggingface_hub
+hf download KRAFTON/A2Z-GameSpec-Bench --repo-type dataset --local-dir a2z_gamespec_bench_dataset
+```
+
+The [dataset card](https://huggingface.co/datasets/KRAFTON/A2Z-GameSpec-Bench) describes the file layout and fields.
 
 
 ## How It Works
